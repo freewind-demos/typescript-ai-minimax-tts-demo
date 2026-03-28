@@ -11,6 +11,10 @@ export interface VoiceSetting {
   vol?: number;
   pitch?: number;
   emotion?: 'happy' | 'sad' | 'angry' | 'fearful' | 'disgusted' | 'surprised' | 'calm' | 'fluent' | 'whisper';
+  /** 中英文文本规范化，略增延迟 */
+  text_normalization?: boolean;
+  /** 朗读 LaTeX（仅中文，公式用 $$ 包裹） */
+  latex_read?: boolean;
 }
 
 export interface AudioSetting {
@@ -18,6 +22,18 @@ export interface AudioSetting {
   bitrate?: 32000 | 64000 | 128000 | 256000;
   format?: 'mp3' | 'pcm' | 'flac' | 'wav';
   channel?: 1 | 2;
+  force_cbr?: boolean;
+}
+
+export interface PronunciationDict {
+  tone?: string[];
+}
+
+export interface VoiceModify {
+  pitch?: number;
+  intensity?: number;
+  timbre?: number;
+  sound_effects?: 'spacious_echo' | 'auditorium_echo' | 'lofi_telephone' | 'robotic';
 }
 
 export interface TTSRequest {
@@ -26,6 +42,10 @@ export interface TTSRequest {
   stream?: boolean;
   voice_setting?: VoiceSetting;
   audio_setting?: AudioSetting;
+  pronunciation_dict?: PronunciationDict;
+  voice_modify?: VoiceModify;
+  language_boost?: string | null;
+  subtitle_enable?: boolean;
   output_format?: 'url' | 'hex';
 }
 
@@ -52,19 +72,17 @@ export interface TTSResponse {
   };
 }
 
-// Available voice IDs (verified working)
+/** 与 demo 下拉及 public/voice-previews 预生成试听一致（须与账号 system 音色一致） */
 export const VOICE_IDS = {
-  // Verified working voice IDs
-  'male-qn-qingse': '中文男声-青年',
-  'female-tianmei': '中文女声-甜美',
-  // Other available voice IDs
-  'male-qn-qingse_v2': '中文男声-青年v2',
-  'male-qn-qianxian': '中文男声-青年先',
-  'female-yunyang': '中文女声-云扬',
-  'male-zhangwei': '中文男声-张伟',
-  'female-tianmei_v2': '中文女声-甜美v2',
-  'male-shawn': '英文男声',
-  'female-alice': '英文女声',
+  'male-qn-qingse': '中文男声 · 青涩青年',
+  'female-tianmei': '中文女声 · 甜美',
+  'male-qn-jingying': '中文男声 · 精英青年',
+  'female-yujie': '中文女声 · 御姐',
+  'female-shaonv': '中文女声 · 少女',
+  'male-qn-badao': '中文男声 · 霸道青年',
+  'female-chengshu': '中文女声 · 成熟',
+  English_Trustworthy_Man: 'English · Trustworthy Man',
+  English_Graceful_Lady: 'English · Graceful Lady',
 } as const;
 
 export type VoiceId = keyof typeof VOICE_IDS;

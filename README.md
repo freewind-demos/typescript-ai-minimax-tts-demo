@@ -2,11 +2,16 @@
 
 基于 MiniMax API 的文本转语音演示项目。
 
+## API 文档
+
+- [MiniMax TTS API 文档](https://platform.minimaxi.com/docs/api-reference/speech-t2a-http)
+- [MiniMax Platform](https://platform.minimaxi.com)
+
 ## 功能
 
 - 调用 MiniMax Speech-02 模型进行文本转语音
 - 支持多种中文/英文音色
-- 可调节语速和情感
+- 可调节语速、音量、音调、情感
 - 直接在浏览器中播放生成的音频
 
 ## 使用方法
@@ -35,10 +40,6 @@ pnpm dev
 4. 输入要转换的文本
 5. 点击"生成语音"按钮
 6. 等待生成完成后，点击播放按钮试听
-
-## API 文档
-
-MiniMax TTS API 文档: https://platform.minimaxi.com/docs/api-reference/speech-t2a-http
 
 ### 主要参数
 
